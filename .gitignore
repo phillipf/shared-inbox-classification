@@ -332,3 +332,10 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# csv and data files
+*.csv
+*.txt
+
+# vscode 
+.vscode

@@ -82,14 +82,16 @@ def read_csv(filename, tokenizer, max_seq_length, labels_map):
     :return: Encoded examples for BERT model as a generator
     
     '''
-    with open(filename, 'r') as f:
-        for line in f.readlines():
-            record = line.rstrip().split(',')
-            features = encode_example(record, tokenizer, max_seq_length, labels_map)
-            yield  ({'input_ids': features['input_ids'],
-                     'attention_mask': features['attention_mask'],
-                     'token_type_ids': features['token_type_ids']},
-                      features['label'])
+    f = pd.read_csv(filename)
+
+    for index, record in f.iterrows():
+        #record = list(line)
+        features = encode_example(
+            record, tokenizer, max_seq_length, labels_map)
+        yield ({'input_ids': features['input_ids'],
+                'attention_mask': features['attention_mask'],
+                'token_type_ids': features['token_type_ids']},
+               features['label'])
 
 def get_dataset(filename, tokenizer, max_seq_length, labels_map):
     ''' Loads data from a CSV file into a Tensorflow Dataset (while encoding each example)
